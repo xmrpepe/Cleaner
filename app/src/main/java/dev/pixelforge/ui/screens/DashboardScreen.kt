@@ -109,6 +109,18 @@ fun DashboardScreen(nav: Navigator) {
                 }
             }
         }
+        item {
+            val reports by c.db.reports().observeAll().collectAsStateWithLifecycle(emptyList())
+            val last = reports.firstOrNull()
+            PfCard(Modifier.fillMaxWidth(), onClick = { nav.go(if (last == null) Dest.OPTIMIZE else Dest.HISTORY) }) {
+                Text("Recommended", style = MaterialTheme.typography.titleSmall)
+                Text(
+                    last?.let { "Last Smart Optimize ${Format.ago(it.time)}: ${it.summary}" }
+                        ?: "Run Smart Optimize for measured, device-specific recommendations.",
+                    style = MaterialTheme.typography.bodySmall, color = Pf.colors.muted,
+                )
+            }
+        }
         item { SectionLabel("Live telemetry") }
         item {
             TileGrid(6, minTileWidth = 168.dp) { i, m ->
