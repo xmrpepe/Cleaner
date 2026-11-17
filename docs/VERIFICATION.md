@@ -12,9 +12,9 @@ What has actually been executed for this build, and what still needs real Pixel 
 | JVM unit tests (`testDebugUnitTest`) | ✅ 16/16 pass |
 | R8-minified release APK | ✅ 4.2 MB, installs and runs (validates keep rules for Shizuku UserService, JNI, Room) |
 | Install + launch on Android 14 x86_64 emulator (software CPU emulation, no KVM) | ✅ onboarding → dashboard → monitor → lab, no crashes |
-| Instrumentation: `NativeLabTest` (5), `DatabaseTest` (2) on emulator | ✅ 7/7 pass |
+| Instrumentation: `NativeLabTest` (5), `DatabaseTest` (2) on emulator | ✅ 7/7 pass (8/8 including UI smoke test) |
 | Native benchmark end-to-end in the running release app (memory bandwidth → conditions → Room → UI) | ✅ |
-| Instrumentation: `UiSmokeTest` | See CI — timed out at 20 s on the software-emulated emulator (first composition of the unminified debug build took > 40 s of CPU); timeouts raised to 60–90 s. CI runs it on a KVM-accelerated emulator. |
+| Instrumentation: `UiSmokeTest` (onboarding → Dashboard → Monitor → Lab) | ✅ passes (after fixing a test bug: the onboarding button needed `performScrollTo()`; timeouts raised for slow emulators) |
 | Android 17 (API 37) emulator | ⚠️ Booted, but its system_server crash-looped under software emulation (watchdog), so on-device tests ran on API 34 instead |
 
 Bugs found and fixed through this testing: text colour outside `Surface`s rendered near-black on dark
