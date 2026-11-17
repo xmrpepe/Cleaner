@@ -3,6 +3,7 @@ package dev.pixelforge.ui.theme
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
@@ -172,7 +173,9 @@ fun PixelForgeTheme(settings: AppSettings, content: @Composable () -> Unit) {
                 extraSmall = RoundedCornerShape(6.dp), small = RoundedCornerShape(10.dp), medium = RoundedCornerShape(14.dp),
                 large = RoundedCornerShape(18.dp), extraLarge = RoundedCornerShape(26.dp),
             ),
-            content = content,
+            // Provide on-background content colour app-wide so text placed outside a Surface
+            // (onboarding, wide sidebar layout, external-display dashboard) stays legible.
+            content = { CompositionLocalProvider(LocalContentColor provides scheme.onBackground, content = content) },
         )
     }
 }

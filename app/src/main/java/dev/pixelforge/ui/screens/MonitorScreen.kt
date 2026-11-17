@@ -2,7 +2,9 @@ package dev.pixelforge.ui.screens
 
 import android.content.Intent
 import android.provider.Settings
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -59,7 +61,7 @@ fun MonitorScreen(nav: Navigator) {
 
     PfScreen("Monitor", "Live hardware telemetry · sampling pauses when hidden") {
         item {
-            Row(Modifier.fillMaxWidth()) {
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())) {
                 listOf("CPU", "Memory").forEachIndexed { i, t -> FilterChip(tab == i, { tab = i }, { Text(t) }, Modifier.padding(end = 6.dp)) }
                 FilterChip(false, { nav.go(Dest.GPU) }, { Text("GPU") }, Modifier.padding(end = 6.dp))
                 FilterChip(false, { nav.go(Dest.BATTERY) }, { Text("Battery") }, Modifier.padding(end = 6.dp))

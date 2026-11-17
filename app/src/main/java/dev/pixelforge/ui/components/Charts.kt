@@ -3,6 +3,8 @@ package dev.pixelforge.ui.components
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -146,15 +148,15 @@ fun LineChart(
     val lo = minValue ?: (all.minOrNull() ?: 0f)
     val hi = maxValue ?: (all.maxOrNull() ?: 1f)
     Column(modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth()) {
-            Text(yFormatter(hi), style = MaterialTheme.typography.labelSmall, color = c.muted, modifier = Modifier.weight(1f))
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), verticalAlignment = Alignment.CenterVertically) {
             series.forEach { s ->
-                Box(Modifier.size(8.dp).clip(RoundedCornerShape(2.dp)).let { it }) { Canvas(Modifier.size(8.dp)) { drawRect(s.color) } }
+                Canvas(Modifier.size(8.dp)) { drawRect(s.color) }
                 Spacer(Modifier.width(4.dp))
-                Text(s.name, style = MaterialTheme.typography.labelSmall, color = c.muted)
+                Text(s.name, style = MaterialTheme.typography.labelSmall, color = c.muted, maxLines = 1)
                 Spacer(Modifier.width(10.dp))
             }
         }
+        Text(yFormatter(hi), style = MaterialTheme.typography.labelSmall, color = c.muted)
         Canvas(Modifier.fillMaxWidth().height(height)) {
             val span = max(hi - lo, 1e-6f)
             for (i in 0..4) {

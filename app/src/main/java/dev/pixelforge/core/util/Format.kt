@@ -24,10 +24,11 @@ object Format {
 
     fun number(value: Double, decimals: Int = 1): String = String.format(Locale.US, "%.${decimals}f", value)
 
-    fun mhz(khz: Long): String = if (khz <= 0) "—" else if (khz >= 1_000_000) {
-        String.format(Locale.US, "%.2f GHz", khz / 1_000_000.0)
-    } else {
-        "${khz / 1000} MHz"
+    fun mhz(khz: Long): String = when {
+        khz <= 0 -> "—"
+        khz >= 1_000_000 -> String.format(Locale.US, "%.2f GHz", khz / 1_000_000.0)
+        khz >= 1000 -> "${khz / 1000} MHz"
+        else -> "$khz kHz"
     }
 
     fun celsius(c: Float?): String = if (c == null || c.isNaN()) "—" else String.format(Locale.US, "%.1f°C", c)
