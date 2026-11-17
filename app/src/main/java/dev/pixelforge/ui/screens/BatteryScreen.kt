@@ -155,7 +155,11 @@ private fun projection(samples: List<TelemetrySample>): Pair<Double, Double?>? {
     return rate to unplugged.last().batteryLevel / rate
 }
 
-/** Design capacity from the framework power profile (best effort; null if hidden). */
+/**
+ * Design capacity from the framework power profile. Best effort: hidden-API access may be
+ * blocked on future releases, in which case null is returned and the user can enter it.
+ */
+@android.annotation.SuppressLint("PrivateApi")
 private fun designCapacityFromPowerProfile(ctx: android.content.Context): Int? = try {
     val cls = Class.forName("com.android.internal.os.PowerProfile")
     val profile = cls.getConstructor(android.content.Context::class.java).newInstance(ctx)

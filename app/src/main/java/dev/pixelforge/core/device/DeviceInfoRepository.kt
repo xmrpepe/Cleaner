@@ -115,7 +115,7 @@ class DeviceInfoRepository(private val context: Context) {
             "Connectivity",
             listOf(
                 InfoItem("Wi-Fi 6E (6 GHz)", "", if (wifi.is6GHzBandSupported) Support.SUPPORTED else Support.UNSUPPORTED),
-                InfoItem("Wi-Fi 7 (802.11be)", "", if (wifi.isWifiStandardSupported(8)) Support.SUPPORTED else Support.UNSUPPORTED),
+                InfoItem("Wi-Fi 7 (802.11be)", "", if (wifi.isWifiStandardSupported(android.net.wifi.ScanResult.WIFI_STANDARD_11BE)) Support.SUPPORTED else Support.UNSUPPORTED),
                 InfoItem("Wi-Fi Aware", "", feature(PackageManager.FEATURE_WIFI_AWARE)),
                 InfoItem("Wi-Fi RTT", "", feature(PackageManager.FEATURE_WIFI_RTT)),
                 InfoItem("Bluetooth LE", "", feature(PackageManager.FEATURE_BLUETOOTH_LE)),

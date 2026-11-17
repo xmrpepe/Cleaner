@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -246,7 +247,7 @@ private fun formatValue(v: Double): String = when {
 private fun FramePacingTest(onDone: () -> Unit) {
     val intervals = remember { mutableStateListOf<Double>() }
     var finished by remember { mutableStateOf(false) }
-    var phase by remember { mutableStateOf(0f) }
+    var phase by remember { mutableFloatStateOf(0f) }
     LaunchedEffect(Unit) {
         var last = 0L
         val start = withFrameNanos { it }

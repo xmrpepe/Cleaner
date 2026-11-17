@@ -13,7 +13,7 @@ add_library(pixelforge SHARED
 
 # Vulkan is loaded dynamically (dlopen) so the library still loads on devices without it.
 target_compile_definitions(pixelforge PRIVATE VK_NO_PROTOTYPES=1)
-target_compile_options(pixelforge PRIVATE -Wall -Wextra -Wno-unused-parameter -O3 -fvisibility=hidden)
+target_compile_options(pixelforge PRIVATE -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -O3 -fvisibility=hidden)
 target_link_libraries(pixelforge PRIVATE log dl android)
 
 # 16 KB page-size compatibility (required for Android 15+ devices with 16 KB pages).

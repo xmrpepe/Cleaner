@@ -36,7 +36,8 @@ import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -86,7 +87,8 @@ fun AppShell(startRoute: String?) {
     val navigator = Navigator(nav)
     val entry by nav.currentBackStackEntryAsState()
     val current = Dest.of(entry?.destination?.route)
-    val wide = LocalConfiguration.current.screenWidthDp >= 840
+    val windowInfo = LocalWindowInfo.current
+    val wide = with(LocalDensity.current) { windowInfo.containerSize.width.toDp() } >= 840.dp
 
     LaunchedEffect(startRoute) {
         if (startRoute != null && Dest.of(startRoute) != null) navigator.go(startRoute)

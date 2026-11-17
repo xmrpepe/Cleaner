@@ -1,7 +1,6 @@
 package dev.pixelforge.ui.screens
 
 import android.Manifest
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -45,7 +44,7 @@ fun AutomationScreen(nav: Navigator) {
         if (!caps.notifications) {
             item {
                 NoticeCard("Notifications are off", "Alerts need notification permission.", actionLabel = "Allow", onAction = {
-                    if (Build.VERSION.SDK_INT >= 33) notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 })
             }
         }

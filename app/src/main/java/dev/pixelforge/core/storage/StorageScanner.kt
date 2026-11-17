@@ -16,6 +16,10 @@ import kotlin.coroutines.coroutineContext
  * rather than scanned. Nothing is deleted here — the scanner only classifies.
  */
 class StorageScanner(private val context: Context) {
+    companion object {
+        /** Standard shared-storage folders that apps expect to exist; never proposed for removal. */
+        val STANDARD_DIRS = setOf("Alarms", "Audiobooks", "DCIM", "Documents", "Download", "Movies", "Music", "Notifications", "Pictures", "Podcasts", "Recordings", "Ringtones", "Android")
+    }
 
     private val pm: PackageManager = context.packageManager
 
@@ -128,7 +132,9 @@ class StorageScanner(private val context: Context) {
                 inaccessible += dir.absolutePath
                 return DirUsage(dir.absolutePath, dir.name, 0, 0)
             }
-            if (entries.isEmpty() && depth > 0) {
+            val relLowerDir = rel.lowercase(Locale.ROOT)
+            val standardTopLevel = depth == 1 && dir.name in STANDARD_DIRS
+            if (entries.isEmpty() && depth > 0 && !standardTopLevel && !relLowerDir.startsWith("android/")) {
                 cats.getValue(JunkCategory.EMPTY_FOLDERS) += ScannedFile(dir.absolutePath, dir.name, 0, dir.lastModified(), isDirectory = true, reason = "Empty directory", selectedByDefault = true)
             }
             for (e in entries) {

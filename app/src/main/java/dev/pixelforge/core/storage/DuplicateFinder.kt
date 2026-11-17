@@ -33,7 +33,8 @@ object DuplicateFinder {
                         out += f.copy(
                             groupId = id,
                             keep = isKeeper,
-                            selectedByDefault = !isKeeper,
+                            // Never preselected: identical copies can be intentional (e.g. shared folders).
+                            selectedByDefault = false,
                             reason = if (isKeeper) "Original (kept)" else "Identical to ${keeper.name}",
                         )
                     }

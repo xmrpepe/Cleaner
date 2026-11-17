@@ -295,7 +295,7 @@ class OptimizationEngine(
             val msg = try {
                 when (action) {
                     is OptAction.CleanFiles -> {
-                        val o = trash.delete(action.paths, useTrash = cfg.useRecycleBin && action.category != JunkCategory.EMPTY_FOLDERS && action.category != JunkCategory.TEMP_FILES, reason = "Smart Optimize: ${action.category.label}")
+                        val o = trash.delete(action.paths, useTrash = cfg.useRecycleBin, reason = "Smart Optimize: ${action.category.label}")
                         if (o.failed.isNotEmpty()) failures++
                         "${o.succeeded.size} removed" + (if (o.bytesTrashed > 0) " (${Format.bytes(o.bytesTrashed)} in recycle bin)" else "") + if (o.failed.isNotEmpty()) ", ${o.failed.size} failed" else ""
                     }

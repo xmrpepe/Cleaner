@@ -26,7 +26,6 @@ bool pinCurrentThread(uint64_t mask) {
 
 namespace {
 
-constexpr int kKindInteger = 0;
 constexpr int kKindFloat = 1;
 constexpr int kKindSort = 2;
 
