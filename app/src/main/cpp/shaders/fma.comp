@@ -1,0 +1,19 @@
+#version 450
+// PixelForge Vulkan compute benchmark: dependent FMA chains per invocation.
+// FLOPs per loop iteration = 8 vec4 FMAs * 4 lanes * 2 = 64.
+layout(local_size_x = 128) in;
+layout(std430, binding = 0) buffer Data { vec4 data[]; };
+layout(push_constant) uniform PC { uint iterations; } pc;
+void main() {
+    uint i = gl_GlobalInvocationID.x;
+    vec4 a = data[i];
+    vec4 m = vec4(0.9999);
+    vec4 c = vec4(0.0001);
+    vec4 r0 = a, r1 = a + 1.0, r2 = a + 2.0, r3 = a + 3.0;
+    vec4 r4 = a + 4.0, r5 = a + 5.0, r6 = a + 6.0, r7 = a + 7.0;
+    for (uint k = 0u; k < pc.iterations; ++k) {
+        r0 = fma(r0, m, c); r1 = fma(r1, m, c); r2 = fma(r2, m, c); r3 = fma(r3, m, c);
+        r4 = fma(r4, m, c); r5 = fma(r5, m, c); r6 = fma(r6, m, c); r7 = fma(r7, m, c);
+    }
+    data[i] = r0 + r1 + r2 + r3 + r4 + r5 + r6 + r7;
+}
