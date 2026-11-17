@@ -4,6 +4,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +22,7 @@ class UiSmokeTest {
                 rule.onAllNodesWithText("SMART OPTIMIZE").fetchSemanticsNodes().isNotEmpty()
         }
         if (rule.onAllNodesWithText("Enter PixelForge").fetchSemanticsNodes().isNotEmpty()) {
-            rule.onNodeWithText("Enter PixelForge").performClick()
+            rule.onNodeWithText("Enter PixelForge").performScrollTo().performClick()
         }
         rule.waitUntil(90_000) { rule.onAllNodesWithText("SMART OPTIMIZE").fetchSemanticsNodes().isNotEmpty() }
         rule.onNodeWithText("Monitor").performClick()
